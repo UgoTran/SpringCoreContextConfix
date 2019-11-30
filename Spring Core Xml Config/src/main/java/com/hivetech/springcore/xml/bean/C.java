@@ -5,7 +5,7 @@ public class C {
     private B instanceB;
 
     public C() {
-        System.out.println("beanC is created " +hashCode());
+        System.out.println("beanC is created: " +hashCode());
     }
 
     public void setInstanceA(A instanceA) {
