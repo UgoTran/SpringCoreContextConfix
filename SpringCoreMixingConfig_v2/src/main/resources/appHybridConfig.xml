@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation=
+               "http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+    <!--    Khai báo namespace
+        https://javapapers.com/spring/spring-applicationcontext/
+        refer: https://stackoverflow.com/questions/7414794/difference-between-contextannotation-config-and-contextcomponent-scan
+    -->
+    <!--
+        context:component-scan  quét package tìm targets
+        chỉ định 1 hoặc nhiều package, hoặc package tổng
+    -->
+    <context:component-scan base-package="com.hivetech.mix.bean"/>
+<!--    <context:component-scan base-package="com.hivetech.mix.bean.xxx"/>-->
+<!--    <context:component-scan base-package="com.hivetech.mix.bean.yyy"/>-->
+<!--    <context:component-scan base-package="com.hivetech.mix.bean.yyy, com.hivetech.mix.bean.xxx"/>-->
+</beans>
