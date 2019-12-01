@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--    cầu nối giữa file lưu thông tin db .properties & file cấu hình .xml-->
+    <context:property-placeholder location="classpath:mariadb.properties"/>
+    <context:component-scan base-package="com.hivetech.demoparams_v1.connectionutils"/>
+
+    <bean id="dbConfigBean" class="com.hivetech.demoparams_v1.model.DB_PropertiesConfig">
+        <!--            Mỗi property value sẽ map với value  tương ứng trong mariadb.properties-->
+        <property name="url" value="${db.url}"/>
+        <property name="pw" value="${db.pw}"/>
+        <property name="user" value="${db.user}"/>
+        <property name="driver" value="${db.driver}"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+<!--    Refer
+    https://inneka.com/programming/java/how-to-use-yamlpropertiesfactorybean-to-load-yaml-files-using-spring-framework-4-1/
+    https://www.javatips.net/api/org.springframework.beans.factory.config.yamlpropertiesfactorybean
+-->
+    <!--    cầu nối giữa file lưu thông tin db .yaml & file cấu hình .xml-->
+    <context:property-placeholder location="classpath:mariadb_v2.yaml"/>
+
+    <context:component-scan base-package="com.hivetech.demoparams_v2.connectionutils"/>
+
+    <bean id="dbYamlConfigBean" class="com.hivetech.demoparams_v2.model.DB_YamlConfig">
+        <!--            Mỗi key value sẽ map với value  tương ứng trong mariadb_v2.yaml-->
+        <property name="description" value="${des}"/>
+        <property name="url" value="${dbUrl}"/>
+        <property name="pw" value="${dbPw}"/>
+        <property name="user" value="${dbUser}"/>
+        <property name="driver" value="${dbDriver}"/>
+    </bean>
+
+</beans>
