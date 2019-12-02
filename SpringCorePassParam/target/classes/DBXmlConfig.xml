@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath*:db.properties"/>
+
+    <bean id="dbInfo" class="com.hivetech.SpringCore.preConfig.xmlConfig.DBInfo">
+        <property name="url" value="${db.url}"/>
+        <property name="port" value="${db.port}"/>
+        <property name="userName" value="${db.username}"/>
+        <property name="passWord" value="${db.password}"/>
+    </bean>
+</beans>
+<!--        //    @Value("#{environment.DB_URL}")-->
+<!--        //    @Value("#{environment.DB_PORT}")-->
+<!--        //    @Value("#{environment.DB_USER}")-->
+<!--        //    @Value("#{environment.DB_PASS}")-->
