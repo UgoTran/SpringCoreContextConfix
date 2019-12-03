@@ -1,8 +1,10 @@
-package com.hivetech.springweb;
+package com.hivetech.springweb.controller;
 
+import com.hivetech.springweb.model.Todo;
+import com.hivetech.springweb.service.TodoService;
+import com.hivetech.springweb.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -26,18 +28,14 @@ public class GetToDoServlet extends HttpServlet {
 
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
-        toDoService = (TodoService) webApplicationContext.getBean("todoService");
+//        webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
+//        toDoService = (TodoService) webApplicationContext.getBean("todoService");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
 
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-     * response)
-     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String id = request.getParameter("id");

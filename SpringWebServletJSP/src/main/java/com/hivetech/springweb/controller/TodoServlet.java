@@ -1,5 +1,7 @@
-package com.hivetech.springweb;
+package com.hivetech.springweb.controller;
 
+import com.hivetech.springweb.model.Todo;
+import com.hivetech.springweb.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -23,9 +25,7 @@ public class TodoServlet extends HttpServlet {
     private TodoService toDoService;
     //Spring ApplicationContext to get the beans
     private WebApplicationContext webApplicationContext;
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public TodoServlet() {
         super();
     }

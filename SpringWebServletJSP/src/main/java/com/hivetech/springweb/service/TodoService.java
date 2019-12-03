@@ -1,4 +1,6 @@
-package com.hivetech.springweb;
+package com.hivetech.springweb.service;
+
+import com.hivetech.springweb.model.Todo;
 
 import java.util.List;
 

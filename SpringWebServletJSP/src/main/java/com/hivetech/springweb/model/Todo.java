@@ -1,4 +1,4 @@
-package com.hivetech.springweb;
+package com.hivetech.springweb.model;
 
 public class Todo {
     private String id;
