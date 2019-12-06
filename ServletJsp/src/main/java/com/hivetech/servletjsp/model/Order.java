@@ -1,5 +1,6 @@
 package com.hivetech.servletjsp.model;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class Order {
@@ -10,7 +11,20 @@ public class Order {
     private LocalDate shippedDate;
     private String status;
     private String comments;
-    private Customer customer;// refer customerNumber
+    private String customerName;
+    public Order(){
+
+    }
+
+    public Order(int orderNumber, Date orderDate, Date requiredDate, Date shippedDate, String status, String comments, String customerName) {
+        this.orderNumber = orderNumber;
+        this.orderDate = orderDate.toLocalDate();
+        this.requiredDate = requiredDate.toLocalDate();
+        this.shippedDate = shippedDate.toLocalDate();
+        this.status = status;
+        this.comments = comments;
+        this.customerName = customerName;
+    }
 
     public int getOrderNumber() {
         return orderNumber;
@@ -60,12 +74,12 @@ public class Order {
         this.comments = comments;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     @Override
@@ -76,8 +90,8 @@ public class Order {
                 ", requiredDate=" + requiredDate +
                 ", shippedDate=" + shippedDate +
                 ", status='" + status + '\'' +
-                ", comments='" + comments + '\'' +
-                ", customer=" + customer +
+                ", comments='" + comments +
+                ", customerName='" + customerName +
                 '}';
     }
 }

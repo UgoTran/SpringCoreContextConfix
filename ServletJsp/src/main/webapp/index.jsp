@@ -6,7 +6,12 @@
 <body>
 <h2>Customers:</h2>
 
-<a href="/customers">Customer list</a>
+<ul>
+    <li><a href="/customers">Customer list</a></li>
+    <li><a href="/orders">Order list</a></li>
+</ul>
+
+
 
 </body>
 </html>
