@@ -35,7 +35,6 @@ public class ListCustomerServlet extends HttpServlet {
             throws ServletException, IOException {
 
         List<Customer> list = customerService.customers();
-
         request.setAttribute("listCustomer", list);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/_listCustomer.jsp");
         dispatcher.forward(request, response);
