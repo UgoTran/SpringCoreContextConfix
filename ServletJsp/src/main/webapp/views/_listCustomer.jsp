@@ -10,6 +10,8 @@
 
 </header>
 
+<a href="/customer/add?">Add new customer</a>
+&nbsp;&nbsp;&nbsp;
 <table border="2">
     <tr>
         <th>ID</th>
@@ -26,13 +28,17 @@
         <th>Refer EMP</th>
         <th>Credit Limit</th>
         <th>Birthday</th>
-<%--        <th>Action</th>--%>
+        <th>Action</th>
     </tr>
 
     <c:forEach var="cust" items="${listCustomer}">
         <tr>
             <td><c:out value="${cust.customerNumber}"/></td>
-            <td><c:out value="${cust.customerName}"/></td>
+            <td>
+                <a href="info?customerNumber=<c:out value='${cust.customerNumber}' />">
+                    <c:out value="${cust.customerName}"/>
+                </a>
+            </td>
             <td><c:out value="${cust.contactLastName}"/></td>
             <td><c:out value="${cust.contactFirstName}"/></td>
             <td><c:out value="${cust.phone}"/></td>
@@ -45,12 +51,10 @@
             <td><c:out value="${cust.salesRepEmployeeNumber}"/></td>
             <td><c:out value="${cust.creditLimit}"/></td>
             <td><c:out value="${cust.birthday}"/></td>
-<%--            <td><a href="edit?id=<c:out value='${cust.id}' />">Edit</a>--%>
-<%--                &nbsp;&nbsp;&nbsp;&nbsp; <a--%>
-<%--                        href="delete?id=<c:out value='${cust.id}' />">Delete</a></td>--%>
-
-            <!--  <td><button (click)="updateTodo(todo.id)" class="btn btn-success">Update</button>
-                      <button (click)="deleteTodo(todo.id)" class="btn btn-warning">Delete</button></td> -->
+            <td>
+                <a href="info?customerNumber=<c:out value='${cust.customerNumber}' />">Edit</a>
+                <a href="delete?customerNumber=<c:out value='${cust.customerNumber}' />">Delete</a>
+            </td>
         </tr>
     </c:forEach>
 </table>
