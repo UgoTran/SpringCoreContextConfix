@@ -38,7 +38,7 @@ public class EditCustomerServlet extends HttpServlet {
         String state = request.getParameter("state");
         String postalCode = request.getParameter("postalCode");
         String country = request.getParameter("country");
-        Integer salesRepEmployeeNumber = Integer.parseInt(request.getParameter("salesRepEmployeeNumber"));
+        Integer salesRepEmployeeNumber = Integer.valueOf(request.getParameter("salesRepEmployeeNumber"));
         Double creditLimit = Double.valueOf(request.getParameter("creditLimit"));
         LocalDate birthday = StringUtils.isAnyBlank(request.getParameter("birthday")) ?
                 null : LocalDate.parse(request.getParameter("birthday"));
@@ -63,8 +63,7 @@ public class EditCustomerServlet extends HttpServlet {
         boolean updated = customerService.update(editionCustomer);
         response.sendRedirect("/customer/list");
         LOGGER.info(String.format("Method: %s | action: %s  | Updated: %b | Customer: %d  ",
-                request.getMethod(), request.getRequestURI(), updated, customerNumber
-        ));
+                request.getMethod(), request.getRequestURI(), updated, customerNumber));
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

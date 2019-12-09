@@ -11,19 +11,18 @@
 <a href="/customer/list">List All Customer</a>
 <a href="/index.jsp">Go to home page</a>
 <%--Xu ly form edit/add --%>
-<c:if test="${selectedCustomer != null}">
-    <form action="/customer/edit" method="post">
-</c:if>
-
 <c:if test="${requsetAcction == 'add'}">
     <form action="/customer/add" method="post">
 </c:if>
 
+<c:if test="${selectedCustomer != null}">
+    <form action="/customer/edit" method="post">
+</c:if>
         <table>
             <tr>
                 <th>ID</th>
                 <td>
-                    <input type="text" name="customerNumber" size="45" readonly="true" style="border: pink"
+                     <input type="text" name="customerNumber" size="45" readonly="true" style="border: pink"
                            value="<c:out value="${selectedCustomer.customerNumber}"/>"
                     />
                 </td>
@@ -134,8 +133,16 @@
             </tr>
             <tr>
                 <td>
-                    <input type="submit" value="Save" />
-                    <input type="reset" value="Back" />
+                    <c:choose>
+                        <c:when test="${requsetAcction == 'add'}">
+                            <input type="submit" value="ADD"/>
+                        </c:when>
+                        <c:otherwise>
+                            <input type="submit" value="SAVE"/>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <input type="reset" value="Back"/>
                 </td>
             </tr>
         </table>
