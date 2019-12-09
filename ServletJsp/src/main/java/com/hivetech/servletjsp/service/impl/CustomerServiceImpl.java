@@ -5,6 +5,7 @@ import com.hivetech.servletjsp.service.CustomerService;
 import com.hivetech.servletjsp.util.Connection_Utils;
 import com.hivetech.servletjsp.util.JDBC_Helper;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
                     "WHERE customerNumber=?;";
     private static String INSERT_CUSTOMER = "INSERT INTO customers VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     private static String INSERT_CUSTOMER_2 = "INSERT INTO customers(customerNumber, customerName) VALUES(?, ?);";
+    private static String GET_NEXT_MAX_ID = "SELECT MAX(customerNumber) FROM customers;";
 
     @Override
     public List<Customer> customers() {
@@ -37,7 +39,6 @@ public class CustomerServiceImpl implements CustomerService {
         try {
             stm = Connection_Utils.connect().createStatement();
             rs = stm.executeQuery(SELECT_CUSTOMERS);
-
 
             while (rs.next()) {
                 int id = rs.getInt(1);
@@ -122,19 +123,34 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean add(Customer customer) {
-        boolean isInserted = false;
+        boolean isInserted;
+        PreparedStatement stm = null;
 
         try {
-            PreparedStatement stm = Connection_Utils.connect().prepareStatement(INSERT_CUSTOMER_2);
+            stm = Connection_Utils.connect().prepareStatement(INSERT_CUSTOMER);
             stm.setInt(1, customer.getCustomerNumber());
             stm.setString(2, customer.getCustomerName());
+            stm.setString(3, customer.getContactLastName());
+            stm.setString(4, customer.getContactFirstName());
+            stm.setString(5, customer.getPhone());
+            stm.setString(6, customer.getAddressLine1());
+            stm.setString(7, customer.getAddressLine2());
+            stm.setString(8, customer.getCity());
+            stm.setString(9, customer.getState());
+            stm.setString(10, customer.getPostalCode());
+            stm.setString(11, customer.getCountry());
+            stm.setInt(12, customer.getSalesRepEmployeeNumber());
+            stm.setDouble(13, customer.getCreditLimit());
+            stm.setDate(14, customer.getBirthday() == null ?
+                    null : Date.valueOf(customer.getBirthday())
+            );
 
             isInserted = stm.executeUpdate() > 0;
-
-            stm.close();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        } finally {
+            JDBC_Helper.closeStatement(stm);
         }
         return isInserted;
     }
@@ -198,4 +214,26 @@ public class CustomerServiceImpl implements CustomerService {
 
         return isDeleted;
     }
+
+    public int getNextMaxId() {
+        int nextMaxId = 0;
+
+        Statement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = Connection_Utils.connect().createStatement();
+            rs = stm.executeQuery(GET_NEXT_MAX_ID);
+            if (rs.next())
+                nextMaxId = rs.getInt(1) + 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBC_Helper.closeResultSet(rs);
+            JDBC_Helper.closeStatement(stm);
+//            JDBC_Helper.closeConnect(null);
+        }
+
+        return nextMaxId;
+    }
+
 }

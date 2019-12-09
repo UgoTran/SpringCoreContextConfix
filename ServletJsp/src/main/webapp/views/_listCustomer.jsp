@@ -10,7 +10,7 @@
 
 </header>
 
-<a href="/customer/add?">Add new customer</a>
+<a href="/customer/add">Add new customer</a>
 &nbsp;&nbsp;&nbsp;
 <table border="2">
     <tr>
