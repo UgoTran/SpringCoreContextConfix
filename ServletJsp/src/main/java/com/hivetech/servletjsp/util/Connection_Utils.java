@@ -3,6 +3,7 @@ package com.hivetech.servletjsp.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Connection_Utils {
@@ -11,34 +12,29 @@ public class Connection_Utils {
     private static DB_YamlConfig dbConfig;
     private static Connection connection;
 
-    private Connection_Utils() {    }
+    private Connection_Utils() {
+    }
 
     public static Connection connect() {
-        if (connection == null) {
+        try {
 
-            dbConfig = ParseYaml.parse();
+            if (connection == null || connection.isClosed())
+            {
 
-            try {
-                Class.forName(dbConfig.getDatabaseProperties().getDbDriver());
-                connection = DriverManager.getConnection(
-                        dbConfig.getDatabaseProperties().getDbUrl()
-                        , dbConfig.getDatabaseProperties().getDbUser()
-                        , dbConfig.getDatabaseProperties().getDbPw());
-            } catch (SQLException | ClassNotFoundException e) {
-                e.printStackTrace();
+                dbConfig = ParseYaml.parse();
+
+                    Class.forName(dbConfig.getDatabaseProperties().getDbDriver());
+                    connection = DriverManager.getConnection(
+                            dbConfig.getDatabaseProperties().getDbUrl()
+                            , dbConfig.getDatabaseProperties().getDbUser()
+                            , dbConfig.getDatabaseProperties().getDbPw());
             }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
-
-        LOGGER.info(dbConfig.toString());
+//        LOGGER.info(dbConfig.toString());
 
         return connection;
     }
 
-    public static void closeConnection(){
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }
