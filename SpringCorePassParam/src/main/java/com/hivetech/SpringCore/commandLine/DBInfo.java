@@ -2,17 +2,8 @@ package com.hivetech.SpringCore.commandLine;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
 
-@Component
-@PropertySource(value = {"classpath:db.properties"})
-//@PropertySource(value = {"classpath:db.properties", "2ndDB.properties"})
-//@PropertySources({
-//        @PropertySource("classpath:db.properties"),
-//        @PropertySource("classpath:2ndDB.properties")
-//})
 public class DBInfo {
     @Value("${db.url}")
     private String url;
@@ -46,8 +37,8 @@ public class DBInfo {
     public void getParam() {
         String url = environment.getProperty("db.url");
         String port = environment.getProperty("db.port");
-        String user = environment.getProperty("db.user");
-        String pass = environment.getProperty("db.pass");
+        String user = environment.getProperty("db.username");
+        String pass = environment.getProperty("db.password");
         System.out.println("the value of url: " + url);
         System.out.println("the value of port: " + port);
         System.out.println("the value of user: " + user);
