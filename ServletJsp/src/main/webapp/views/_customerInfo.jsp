@@ -31,7 +31,7 @@
     </table>
 </form>
 <%--Xu ly form edit/add --%>
-<c:if test="${requsetAcction == 'add'}">
+<c:if test="${requestAction == 'add'}">
     <form action="/customer/add" method="post">
 </c:if>
 

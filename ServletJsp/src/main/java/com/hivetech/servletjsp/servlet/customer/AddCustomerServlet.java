@@ -75,9 +75,9 @@ public class AddCustomerServlet extends HttpServlet {
             throws ServletException, IOException {
         int customerId = ((CustomerServiceImpl)customerService).getNextMaxId();
 
-        request.setAttribute("requsetAcction", "add");
+        request.setAttribute("requestAction", "add");
         request.setAttribute("selectedCustomer", new Customer(customerId));
-        response.setHeader("requsetAcctionHeader", "add");
+        response.setHeader("requestActionHeader", "add");
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/_customerInfo.jsp");
         dispatcher.forward(request, response);
 

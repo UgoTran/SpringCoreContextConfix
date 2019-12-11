@@ -38,8 +38,10 @@ public class EditCustomerServlet extends HttpServlet {
         String state = request.getParameter("state");
         String postalCode = request.getParameter("postalCode");
         String country = request.getParameter("country");
-        Integer salesRepEmployeeNumber = Integer.valueOf(request.getParameter("salesRepEmployeeNumber"));
-        Double creditLimit = Double.valueOf(request.getParameter("creditLimit"));
+        Integer salesRepEmployeeNumber = !StringUtils.isAnyBlank(request.getParameter("salesRepEmployeeNumber"))
+                ? Integer.parseInt(request.getParameter("salesRepEmployeeNumber")) : 0;
+        Double creditLimit = !StringUtils.isEmpty(request.getParameter("creditLimit")) ?
+                Double.valueOf(request.getParameter("creditLimit")) : 0.0;
         LocalDate birthday = StringUtils.isAnyBlank(request.getParameter("birthday")) ?
                 null : LocalDate.parse(request.getParameter("birthday"));
 

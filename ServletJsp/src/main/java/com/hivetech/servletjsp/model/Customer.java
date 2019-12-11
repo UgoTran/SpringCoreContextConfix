@@ -18,6 +18,7 @@ public class Customer {
     private Integer salesRepEmployeeNumber;
     private Double creditLimit;
     private LocalDate birthday;
+    private String profilePhotoPath;
 
     public Customer() {
     }
@@ -48,6 +49,27 @@ public class Customer {
         this.salesRepEmployeeNumber = salesRepEmployeeNumber;
         this.creditLimit = creditLimit;
         this.birthday = birthday;
+    }
+
+    public Customer(int customerNumber, String customerName, String contactLastName, String contactFirstName,
+                    String phone, String addressLine1, String addressLine2, String city, String state,
+                    String postalCode, String country, Integer salesRepEmployeeNumber, Double creditLimit,
+                    LocalDate birthday, String profilePhotoPath) {
+        this.customerNumber = customerNumber;
+        this.customerName = customerName;
+        this.contactLastName = contactLastName;
+        this.contactFirstName = contactFirstName;
+        this.phone = phone;
+        this.addressLine1 = addressLine1;
+        this.addressLine2 = addressLine2;
+        this.city = city;
+        this.state = state;
+        this.postalCode = postalCode;
+        this.country = country;
+        this.salesRepEmployeeNumber = salesRepEmployeeNumber;
+        this.creditLimit = creditLimit;
+        this.birthday = birthday;
+        this.profilePhotoPath = profilePhotoPath;
     }
 
     public LocalDate getBirthday() {
@@ -162,23 +184,11 @@ public class Customer {
         this.creditLimit = creditLimit;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "customerNumber=" + customerNumber +
-                ", customerName='" + customerName + '\'' +
-                ", contactLastName='" + contactLastName + '\'' +
-                ", contactFirstName='" + contactFirstName + '\'' +
-                ", phone='" + phone + '\'' +
-                ", addressLine1='" + addressLine1 + '\'' +
-                ", addressLine2='" + addressLine2 + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", postalCode='" + postalCode + '\'' +
-                ", country='" + country + '\'' +
-                ", salesRepEmployeeNumber=" + salesRepEmployeeNumber +
-                ", creditLimit=" + creditLimit +
-                ", birthday=" + birthday +
-                '}';
+    public String getProfilePhotoPath() {
+        return profilePhotoPath;
+    }
+
+    public void setProfilePhotoPath(String profilePhotoPath) {
+        this.profilePhotoPath = profilePhotoPath;
     }
 }
