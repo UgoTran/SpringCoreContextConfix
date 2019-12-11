@@ -7,51 +7,15 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
-public class CopyerImg {
+public class ProcessPhoto {
 
+    private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
     private static final String diskNameOutput = "D:/";
     private static final String folderPathOutput = "classicmodels/customer/profile-photo/";
     private static String imgName = "D:/imgtest.jpg";
     private static int maxImgSize = 10_000;
 
-    public static String saveImg(String imgName, InputStream servletInputStream) {
-
-//        File fileInput = new File(imgPathInput);
-//        try {
-//            InputStream inputStream = new FileInputStream(fileInput);
-//            //Creating a byte array
-//            byte bytes[] = new byte[(int) fileInput.length()];
-//            //Reading data into the byte array
-//            int numOfBytes = inputStream.read(bytes);
-//            //Creating a FileInputStream object
-//            OutputStream outputStream = new FileOutputStream(diskNameOutput + folderPathOutput + fileInput.getName());
-//            //Writing the contents of the Output Stream to a file
-//            outputStream.write(bytes);
-//
-//        }catch (IOException ex){
-//            ex.printStackTrace();
-//        }
-
-//        InputStream input = null;
-//        OutputStream output = null;
-//        try {
-//            input = servletInputStream;
-//            output = new FileOutputStream(diskNameOutput + folderPathOutput + imgName);
-//            byte[] buf = new byte[1024];
-//            int bytesRead;
-//            while ((bytesRead = input.read(buf)) > 0) {
-//                output.write(buf, 0, bytesRead);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                input.close();
-//                output.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
+    public static String saveImg(InputStream servletInputStream) {
 
         String tempFileName = UUID.randomUUID().toString();
 
@@ -85,8 +49,6 @@ public class CopyerImg {
 
         return myChecksum;
     }
-
-    private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
 
     public static String bytesToHex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];

@@ -6,30 +6,27 @@ import com.hivetech.servletjsp.service.UploadPhotoService;
 import com.hivetech.servletjsp.util.Connection_Utils;
 import com.hivetech.servletjsp.util.JDBC_Helper;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerServiceImpl implements CustomerService, UploadPhotoService {
+public class CustomerServiceImpl implements CustomerService, UploadPhotoService<Customer> {
 
     private static String SELECT_CUSTOMERS = "SELECT * FROM customers LIMIT 10;";
     private static String DELETE_CUSTOMER_BY_ID = "DELETE FROM customers WHERE customerNumber=?;";
     private static String GET_CUSTOMER_BY_ID = "SELECT * FROM customers WHERE customerNumber=?;";
     private static String UPDATE_CUSTOMER =
-            "UPDATE customers " +
+                    "UPDATE customers " +
                     "SET customerName=?, contactLastName=?, contactFirstName=?, " +
-                    "phone=?, addressLine1=?, addressLine2=?, city=?, state=?, postalCode=?, " +
-                    "country=?, salesRepEmployeeNumber=?, creditLimit= ?, birthday=? " +
-                    "WHERE customerNumber=?;";
-    private static String UPDATE_CUSTOMER_2 =
-            "UPDATE customers " +
-                    "SET customerName=?" +
+                        "phone=?, addressLine1=?, addressLine2=?, city=?, state=?, postalCode=?, " +
+                        "country=?, salesRepEmployeeNumber=?, creditLimit= ?, birthday=? " +
                     "WHERE customerNumber=?;";
     private static String INSERT_CUSTOMER = "INSERT INTO customers VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-    private static String INSERT_CUSTOMER_2 = "INSERT INTO customers(customerNumber, customerName) VALUES(?, ?);";
     private static String GET_NEXT_MAX_ID = "SELECT MAX(customerNumber) FROM customers;";
+    private static String INSERT_CUSTOMER_PHOTO_PATH = "INSERT INTO customers(profilePhotoPath) VALUE(?) WHERE customerNumber=?;";
+    private static String UPDATE_CUSTOMER_PHOTO_PATH = "UPDATE customers SET profilePhotoPath=? WHERE customerNumber=?;";
+    private static String GET_CUSTOMER_PHOTO_PATH_BY_ID = "SELECT profilePhotoPath FROM customers WHERE customerNumber=?;";
 
     @Override
     public List<Customer> customers() {
@@ -70,7 +67,6 @@ public class CustomerServiceImpl implements CustomerService, UploadPhotoService 
             JDBC_Helper.closeResultSet(rs);
             JDBC_Helper.closeStatement(stm);
         }
-
 
         return list;
     }
@@ -153,22 +149,17 @@ public class CustomerServiceImpl implements CustomerService, UploadPhotoService 
         } finally {
             JDBC_Helper.closeStatement(stm);
         }
+
         return isInserted;
     }
 
     @Override
     public boolean update(Customer customer) {
         boolean isUpdated;
-
-        String UPDATE_CUSTOMER =
-                "UPDATE customers " +
-                        "SET customerName=?, contactLastName=?, contactFirstName=?, " +
-                        "phone=?, addressLine1=?, addressLine2=?, city=?, state=?, postalCode=?, " +
-                        "country=?, salesRepEmployeeNumber=?, creditLimit= ?, birthday=? " +
-                        "WHERE customerNumber=?;";
+        PreparedStatement stm = null;
 
         try {
-            PreparedStatement stm = Connection_Utils.connect().prepareStatement(UPDATE_CUSTOMER);
+            stm = Connection_Utils.connect().prepareStatement(UPDATE_CUSTOMER);
             stm.setString(1, customer.getCustomerName());
             stm.setString(2, customer.getContactLastName());
             stm.setString(3, customer.getContactFirstName());
@@ -187,11 +178,10 @@ public class CustomerServiceImpl implements CustomerService, UploadPhotoService 
             stm.setInt(14, customer.getCustomerNumber());
 
             isUpdated = stm.executeUpdate() > 0;
-
-            stm.close();
         } catch (SQLException e) {
-
             return false;
+        } finally {
+            JDBC_Helper.closeStatement(stm);
         }
 
         return isUpdated;
@@ -201,16 +191,16 @@ public class CustomerServiceImpl implements CustomerService, UploadPhotoService 
     public boolean delete(int id) {
         boolean isDeleted = false;
 
+        PreparedStatement stm = null;
+
         try {
-            PreparedStatement stm = Connection_Utils.connect().prepareStatement(DELETE_CUSTOMER_BY_ID);
+            stm = Connection_Utils.connect().prepareStatement(DELETE_CUSTOMER_BY_ID);
             stm.setInt(1, id);
-
             isDeleted = stm.executeUpdate() > 0;
-
-            stm.close();
         } catch (SQLException e) {
-
             return false;
+        } finally {
+            JDBC_Helper.closeStatement(stm);
         }
 
         return isDeleted;
@@ -236,24 +226,72 @@ public class CustomerServiceImpl implements CustomerService, UploadPhotoService 
 
         return nextMaxId;
     }
-//    Handle photoProfile
+
+    //    Handle photoProfile
     @Override
-    public boolean addPhotoPath(String photoPath) {
-        return false;
+    public boolean addPhotoPath(String photoPath, int customerNumber) {
+        boolean isAdded;
+        PreparedStatement stm = null;
+
+        try {
+            stm = Connection_Utils.connect().prepareStatement(INSERT_CUSTOMER_PHOTO_PATH);
+            stm.setString(1, photoPath);
+            stm.setInt(2, customerNumber);
+            isAdded = stm.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            JDBC_Helper.closeStatement(stm);
+        }
+
+        return isAdded;
     }
 
     @Override
-    public boolean editPhotoPath(Object o) {
-        return false;
+    public boolean editPhotoPath(Customer customer) {
+        boolean isUpdated;
+        PreparedStatement stm = null;
+
+        try {
+            stm = Connection_Utils.connect().prepareStatement(UPDATE_CUSTOMER_PHOTO_PATH);
+            stm.setString(1, customer.getProfilePhotoPath());
+
+            isUpdated = stm.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            return false;
+
+        } finally {
+            JDBC_Helper.closeStatement(stm);
+        }
+
+        return isUpdated;
     }
 
-    @Override
-    public boolean deletePhotoPath(String elementId) {
-        return false;
-    }
 
     @Override
-    public String getPhotoPath() {
-        return null;
+    public String getPhotoPath(String elementId) {
+        String photoPath= "";
+
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            stm = Connection_Utils.connect().prepareStatement(GET_CUSTOMER_PHOTO_PATH_BY_ID);
+            stm.setString(1, elementId);
+            rs = stm.executeQuery();
+
+            if(rs.next())
+                photoPath = rs.getString(1);
+
+        }catch (SQLException e){
+
+            e.printStackTrace();
+        }finally {
+
+            JDBC_Helper.closeStatement(stm);
+        }
+
+        return photoPath;
     }
 }
