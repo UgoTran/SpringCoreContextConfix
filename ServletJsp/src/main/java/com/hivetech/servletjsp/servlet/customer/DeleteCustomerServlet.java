@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Logger;
 
 @WebServlet("/customer/delete")
@@ -36,7 +35,6 @@ public class DeleteCustomerServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("customerNumber"));
         boolean isDeleted = customerService.delete(id);
         response.sendRedirect("/customer/list");
-
 
         LOGGER.info("action: " + request.getServletPath() + " | isDeleted: " + isDeleted + " | customerid: " + id );
     }

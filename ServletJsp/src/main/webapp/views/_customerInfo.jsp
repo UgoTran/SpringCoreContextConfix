@@ -10,6 +10,26 @@
 <h1>Customer Management</h1>
 <a href="/customer/list">List All Customer</a>
 <a href="/index.jsp">Go to home page</a>
+<%--        handle upload profilephoto--%>
+<form action="/customer/upload/profilephoto" method="post" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <th>
+                <input type="file" name="imgUpload" />
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <div style="border: 1px solid deeppink; width: 9.5rem; height: 9.5rem;">
+                    <img src="test.png"
+                         alt="${selectedCustomer.customerName} profile photo"
+                         height="150" width="150">
+                </div>
+                <input type="submit" value="Upload Profile Photo"/>
+            </td>
+        </tr>
+    </table>
+</form>
 <%--Xu ly form edit/add --%>
 <c:if test="${requsetAcction == 'add'}">
     <form action="/customer/add" method="post">
@@ -18,6 +38,7 @@
 <c:if test="${selectedCustomer != null}">
     <form action="/customer/edit" method="post">
 </c:if>
+<%--        Customer details--%>
         <table>
             <tr>
                 <th>ID</th>

@@ -2,6 +2,7 @@ package com.hivetech.servletjsp.service.impl;
 
 import com.hivetech.servletjsp.model.Customer;
 import com.hivetech.servletjsp.service.CustomerService;
+import com.hivetech.servletjsp.service.UploadPhotoService;
 import com.hivetech.servletjsp.util.Connection_Utils;
 import com.hivetech.servletjsp.util.JDBC_Helper;
 
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceImpl implements CustomerService, UploadPhotoService {
 
     private static String SELECT_CUSTOMERS = "SELECT * FROM customers LIMIT 10;";
     private static String DELETE_CUSTOMER_BY_ID = "DELETE FROM customers WHERE customerNumber=?;";
@@ -235,5 +236,24 @@ public class CustomerServiceImpl implements CustomerService {
 
         return nextMaxId;
     }
+//    Handle photoProfile
+    @Override
+    public boolean addPhotoPath(String photoPath) {
+        return false;
+    }
 
+    @Override
+    public boolean editPhotoPath(Object o) {
+        return false;
+    }
+
+    @Override
+    public boolean deletePhotoPath(String elementId) {
+        return false;
+    }
+
+    @Override
+    public String getPhotoPath() {
+        return null;
+    }
 }
