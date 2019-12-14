@@ -7,6 +7,8 @@
 <h2>Customers:</h2>
 
 <a href="/customer/list">Customer list</a>
+<hr>
+<a href="/views/test/_choseBeerSize.jsp">test beer</a>
 
 </body>
 </html>

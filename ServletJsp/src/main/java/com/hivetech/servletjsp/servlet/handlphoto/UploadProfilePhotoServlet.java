@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 @WebServlet("/customer/upload/profilephoto")
 @MultipartConfig
@@ -28,12 +29,15 @@ public class UploadProfilePhotoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws
             ServletException, IOException {
 
-        //img file name + postfix
-//        String imgName = req.getParameter("imgUpload");
         Part imgPart = req.getPart("imgUpload");
-//        InputStream is = req.getInputStream();
 
-        String fileName = ProcessPhoto.saveImg(req.getInputStream());
+        String photoNameInput = Paths.get(imgPart.getSubmittedFileName()).getFileName().toString();
+
+        String photoNameOutput = ProcessPhoto.saveImg(imgPart.getInputStream(), photoNameInput);
+        Customer customer = new Customer();
+        customer.setCustomerNumber(103);
+        customer.setProfilePhotoName(photoNameOutput);
+        uploadPhotoService.editPhotoPath(customer);
 
     }
 }

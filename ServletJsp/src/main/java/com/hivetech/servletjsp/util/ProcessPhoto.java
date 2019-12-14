@@ -1,5 +1,7 @@
 package com.hivetech.servletjsp.util;
 
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -12,31 +14,42 @@ public class ProcessPhoto {
     private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
     private static final String diskNameOutput = "D:/";
     private static final String folderPathOutput = "classicmodels/customer/profile-photo/";
-    private static String imgName = "D:/imgtest.jpg";
     private static int maxImgSize = 10_000;
 
-    public static String saveImg(InputStream servletInputStream) {
+    public static String saveImg(InputStream servletInputStream, String photoNameInput) {
 
         String tempFileName = UUID.randomUUID().toString();
-
+        String fileExtension = "." + FilenameUtils.getExtension(photoNameInput);
+        InputStream inputStream =null;
+        OutputStream outputStream = null;
         try {
-            InputStream inputStream = servletInputStream;
+
             String savingPath = diskNameOutput + folderPathOutput;
             String originalFilePath = savingPath + tempFileName;
-            OutputStream outputStream = new FileOutputStream(originalFilePath);
+
+
+            inputStream = servletInputStream;
+            outputStream = new FileOutputStream(originalFilePath + fileExtension);
             inputStream.transferTo(outputStream);
 
-            String md5FromFile = genMD5FromFile(originalFilePath);
-            File f1 = new File(originalFilePath);
-            File f2 = new File(savingPath + md5FromFile);
-            boolean renameSuccess = f1.renameTo(f2);
+            inputStream.close();
+            outputStream.close();
+
+            String md5FromFile = genMD5FromFile(originalFilePath + fileExtension);
+
+            File originFile = new File(originalFilePath + fileExtension);
+            File fileRenamed = new File(savingPath + md5FromFile + fileExtension);
+            fileRenamed.createNewFile();
+            boolean renameSuccess = originFile.renameTo(fileRenamed);
             if (renameSuccess) {
                 return md5FromFile;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+        } finally {
+
         }
-        return tempFileName;
+        return tempFileName + fileExtension;
     }
 
     public static String genMD5FromFile(String tempFileName)

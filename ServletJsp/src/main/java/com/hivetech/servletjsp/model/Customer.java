@@ -18,7 +18,7 @@ public class Customer {
     private Integer salesRepEmployeeNumber;
     private Double creditLimit;
     private LocalDate birthday;
-    private String profilePhotoPath;
+    private String profilePhotoName;
 
     public Customer() {
     }
@@ -54,7 +54,7 @@ public class Customer {
     public Customer(int customerNumber, String customerName, String contactLastName, String contactFirstName,
                     String phone, String addressLine1, String addressLine2, String city, String state,
                     String postalCode, String country, Integer salesRepEmployeeNumber, Double creditLimit,
-                    LocalDate birthday, String profilePhotoPath) {
+                    LocalDate birthday, String profilePhotoName) {
         this.customerNumber = customerNumber;
         this.customerName = customerName;
         this.contactLastName = contactLastName;
@@ -69,7 +69,7 @@ public class Customer {
         this.salesRepEmployeeNumber = salesRepEmployeeNumber;
         this.creditLimit = creditLimit;
         this.birthday = birthday;
-        this.profilePhotoPath = profilePhotoPath;
+        this.profilePhotoName = profilePhotoName;
     }
 
     public LocalDate getBirthday() {
@@ -184,11 +184,11 @@ public class Customer {
         this.creditLimit = creditLimit;
     }
 
-    public String getProfilePhotoPath() {
-        return profilePhotoPath;
+    public String getProfilePhotoName() {
+        return profilePhotoName;
     }
 
-    public void setProfilePhotoPath(String profilePhotoPath) {
-        this.profilePhotoPath = profilePhotoPath;
+    public void setProfilePhotoName(String profilePhotoName) {
+        this.profilePhotoName = profilePhotoName;
     }
 }

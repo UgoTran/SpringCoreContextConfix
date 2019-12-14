@@ -5,41 +5,43 @@
 <head>
     <title>HiveTech</title>
     <link rel="shortcut icon" href="#">
+    <script src="/assets/js/handlePhoto.js"></script>
 </head>
 <body>
 <h1>Customer Management</h1>
 <a href="/customer/list">List All Customer</a>
 <a href="/index.jsp">Go to home page</a>
-<%--        handle upload profilephoto--%>
-<form action="/customer/upload/profilephoto" method="post" enctype="multipart/form-data">
-    <table>
+<%--<form action="/customer/upload/profilephoto" method="post" enctype="multipart/form-data">--%>
+<%--</form>--%>
+<%--Xu ly form edit/add --%>
+<c:if test="${requestAction == 'add'}">
+    <form action="/customer/add" method="post" enctype="multipart/form-data">
+</c:if>
+
+<c:if test="${selectedCustomer != null}">
+    <form action="/customer/edit" method="post" enctype="multipart/form-data">
+</c:if>
+    <%--        handle upload profilephoto--%>
+    <table id="photoDataUpload">
         <tr>
             <th>
-                <input type="file" name="imgUpload" />
+                <input type="file" name="imgUpload" accept="image/*" onchange="loadFile(event)"/>
             </th>
         </tr>
         <tr>
             <td>
-                <div style="border: 1px solid deeppink; width: 9.5rem; height: 9.5rem;">
-                    <img src="test.png"
+                <div style="border: 1px solid deeppink; width: 11.2rem; height: 11.2rem;">
+                    <img src="${selectedCustomer.profilePhotoName}"
+                         id="photoOutput"
                          alt="${selectedCustomer.customerName} profile photo"
-                         height="150" width="150">
+                         height="175" width="178">
                 </div>
                 <input type="submit" value="Upload Profile Photo"/>
             </td>
         </tr>
-    </table>
-</form>
-<%--Xu ly form edit/add --%>
-<c:if test="${requestAction == 'add'}">
-    <form action="/customer/add" method="post">
-</c:if>
-
-<c:if test="${selectedCustomer != null}">
-    <form action="/customer/edit" method="post">
-</c:if>
+    </table >
 <%--        Customer details--%>
-        <table>
+        <table id="textData">
             <tr>
                 <th>ID</th>
                 <td>

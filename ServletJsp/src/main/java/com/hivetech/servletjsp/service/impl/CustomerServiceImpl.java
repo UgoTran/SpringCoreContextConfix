@@ -24,9 +24,8 @@ public class CustomerServiceImpl implements CustomerService, UploadPhotoService<
                     "WHERE customerNumber=?;";
     private static String INSERT_CUSTOMER = "INSERT INTO customers VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     private static String GET_NEXT_MAX_ID = "SELECT MAX(customerNumber) FROM customers;";
-    private static String INSERT_CUSTOMER_PHOTO_PATH = "INSERT INTO customers(profilePhotoPath) VALUE(?) WHERE customerNumber=?;";
-    private static String UPDATE_CUSTOMER_PHOTO_PATH = "UPDATE customers SET profilePhotoPath=? WHERE customerNumber=?;";
-    private static String GET_CUSTOMER_PHOTO_PATH_BY_ID = "SELECT profilePhotoPath FROM customers WHERE customerNumber=?;";
+    private static String UPDATE_CUSTOMER_PHOTO_PATH = "UPDATE customers SET profilePhotoName=? WHERE customerNumber=?;";
+    private static String GET_CUSTOMER_PHOTO_PATH_BY_ID = "SELECT profilePhotoName FROM customers WHERE customerNumber=?;";
 
     @Override
     public List<Customer> customers() {
@@ -229,33 +228,14 @@ public class CustomerServiceImpl implements CustomerService, UploadPhotoService<
 
     //    Handle photoProfile
     @Override
-    public boolean addPhotoPath(String photoPath, int customerNumber) {
-        boolean isAdded;
-        PreparedStatement stm = null;
-
-        try {
-            stm = Connection_Utils.connect().prepareStatement(INSERT_CUSTOMER_PHOTO_PATH);
-            stm.setString(1, photoPath);
-            stm.setInt(2, customerNumber);
-            isAdded = stm.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            JDBC_Helper.closeStatement(stm);
-        }
-
-        return isAdded;
-    }
-
-    @Override
     public boolean editPhotoPath(Customer customer) {
         boolean isUpdated;
         PreparedStatement stm = null;
 
         try {
             stm = Connection_Utils.connect().prepareStatement(UPDATE_CUSTOMER_PHOTO_PATH);
-            stm.setString(1, customer.getProfilePhotoPath());
+            stm.setString(1, customer.getProfilePhotoName());
+            stm.setInt(2, customer.getCustomerNumber());
 
             isUpdated = stm.executeUpdate() > 0;
 
@@ -268,7 +248,6 @@ public class CustomerServiceImpl implements CustomerService, UploadPhotoService<
 
         return isUpdated;
     }
-
 
     @Override
     public String getPhotoPath(String elementId) {
