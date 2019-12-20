@@ -21,7 +21,7 @@ public class TodoServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     //We have already configured in applicationContext.xml for annotation
-    @Autowired
+//    @Autowired
     private TodoService toDoService;
     //Spring ApplicationContext to get the beans
     private WebApplicationContext webApplicationContext;
