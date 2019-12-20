@@ -1,4 +1,4 @@
-package com.hivetech.servletjsp.model;
+package com.hivetech.thymeleafservlet.model;
 
 import java.time.LocalDate;
 
