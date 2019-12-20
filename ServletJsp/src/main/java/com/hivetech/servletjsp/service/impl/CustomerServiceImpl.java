@@ -22,6 +22,12 @@ public class CustomerServiceImpl implements CustomerService, UploadPhotoService<
                         "phone=?, addressLine1=?, addressLine2=?, city=?, state=?, postalCode=?, " +
                         "country=?, salesRepEmployeeNumber=?, creditLimit= ?, birthday=? " +
                     "WHERE customerNumber=?;";
+    private static String UPDATE_CUSTOMER_V2 =
+            "UPDATE customers " +
+                    "SET customerName=?, contactLastName=?, contactFirstName=?, " +
+                    "phone=?, addressLine1=?, addressLine2=?, city=?, state=?, postalCode=?, " +
+                    "country=?, salesRepEmployeeNumber=?, creditLimit= ?, birthday=?, profilePhotoName=? " +
+                    "WHERE customerNumber=?;";
     private static String INSERT_CUSTOMER = "INSERT INTO customers VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     private static String GET_NEXT_MAX_ID = "SELECT MAX(customerNumber) FROM customers;";
     private static String UPDATE_CUSTOMER_PHOTO_PATH = "UPDATE customers SET profilePhotoName=? WHERE customerNumber=?;";
@@ -158,7 +164,7 @@ public class CustomerServiceImpl implements CustomerService, UploadPhotoService<
         PreparedStatement stm = null;
 
         try {
-            stm = Connection_Utils.connect().prepareStatement(UPDATE_CUSTOMER);
+            stm = Connection_Utils.connect().prepareStatement(UPDATE_CUSTOMER_V2);
             stm.setString(1, customer.getCustomerName());
             stm.setString(2, customer.getContactLastName());
             stm.setString(3, customer.getContactFirstName());
@@ -174,7 +180,9 @@ public class CustomerServiceImpl implements CustomerService, UploadPhotoService<
             stm.setDate(13, customer.getBirthday() == null ?
                     null : Date.valueOf(customer.getBirthday())
             );
-            stm.setInt(14, customer.getCustomerNumber());
+            stm.setString(14, customer.getProfilePhotoName());
+            stm.setInt(15, customer.getCustomerNumber());
+
 
             isUpdated = stm.executeUpdate() > 0;
         } catch (SQLException e) {

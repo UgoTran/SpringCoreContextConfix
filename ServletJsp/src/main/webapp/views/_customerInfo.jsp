@@ -31,7 +31,7 @@
         <tr>
             <td>
                 <div style="border: 1px solid deeppink; width: 11.2rem; height: 11.2rem;">
-                    <img src="${selectedCustomer.profilePhotoName}"
+                    <img src="${basePath}pic1.png"
                          id="photoOutput"
                          alt="${selectedCustomer.customerName} profile photo"
                          height="175" width="178">

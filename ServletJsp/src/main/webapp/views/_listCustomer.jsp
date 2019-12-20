@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/xml" prefix="xml" %>
+<%@ taglib uri="http://java.sun.com/jstl/sql" prefix="sql" %>
+
 <html>
 <head>
     <title>Customer Management Application</title>
@@ -11,7 +16,16 @@
 </header>
 
 <a href="/customer/add">Add new customer</a>
-&nbsp;&nbsp;&nbsp;
+
+<c:catch var ="catchtheException">
+    <% int x = 2/0;%>
+</c:catch>
+
+<c:if test = "${catchtheException != null}">
+    <p>The type of exception is : ${catchtheException} <br />
+        There is an exception: ${catchtheException.message}</p>
+</c:if>
+
 <table border="2">
     <tr>
         <th>ID</th>
@@ -28,6 +42,7 @@
         <th>Refer EMP</th>
         <th>Credit Limit</th>
         <th>Birthday</th>
+        <th>ProfilePhoto</th>
         <th>Action</th>
     </tr>
 
@@ -51,6 +66,16 @@
             <td><c:out value="${cust.salesRepEmployeeNumber}"/></td>
             <td><c:out value="${cust.creditLimit}"/></td>
             <td><c:out value="${cust.birthday}"/></td>
+            <td>
+                <c:out value="${cust.profilePhotoName}"/>
+                <div style="border: 2px solid hotpink; width: 36px; height: 36px;">
+                    <img src="${cust.profilePhotoName}"
+                         id="photoOutput"
+                         alt="${cust.customerName} profile photo"
+                         height="35" width="35">
+                </div>
+
+            </td>
             <td>
                 <a href="info?customerNumber=<c:out value='${cust.customerNumber}' />">Edit</a>
                 <a href="delete?customerNumber=<c:out value='${cust.customerNumber}' />">Delete</a>

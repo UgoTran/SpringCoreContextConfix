@@ -73,7 +73,8 @@ public class EditCustomerServlet extends HttpServlet {
                 country,
                 salesRepEmployeeNumber,
                 creditLimit,
-                birthday
+                birthday,
+                photoNameOutput
         );
 
         boolean updated = customerService.update(editionCustomer);

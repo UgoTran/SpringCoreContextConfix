@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation=
+               "http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+    <!--    Khai báo namespace-->
+    <!--
+        1. config kết hợp anno & xml: nếu ko có <context:annotation-config/>
+        nó sẽ ko kích hoạt thành phần dùng @Autowrite, etc
+        refer: https://stackoverflow.com/questions/7414794/difference-between-contextannotation-config-and-contextcomponent-scan
+        2. context:annotation-config  < kích hoạt beans dùng anno trên cùng một application context & làm vc #
+        3. context:annotation-config  < chỉ hoạt động khi beans đã được đăng kí trong application context
+    -->
+    <context:annotation-config/>
+    <bean id="beanB" class="com.hivetech.sping.mix.bean.B"/>
+    <bean id="beanC" class="com.hivetech.sping.mix.bean.C"/>
+    <bean id="beanA" class="com.hivetech.sping.mix.bean.A"/>
+</beans>

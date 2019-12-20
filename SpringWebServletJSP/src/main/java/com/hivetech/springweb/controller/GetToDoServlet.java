@@ -17,23 +17,23 @@ import java.io.IOException;
 
 @WebServlet("/todo")
 public class GetToDoServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
     @Autowired
     private TodoService toDoService;
-    private WebApplicationContext webApplicationContext;
+//    private WebApplicationContext webApplicationContext;
 
-    public GetToDoServlet() {
-        super();
-    }
+//    public GetToDoServlet() {
+//        super();
+//    }
 
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-//        webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
-//        toDoService = (TodoService) webApplicationContext.getBean("todoService");
-    }
+//    public void init(ServletConfig config) throws ServletException {
+//        super.init(config);
+////        webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
+////        toDoService = (TodoService) webApplicationContext.getBean("todoService");
+//    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        doPost(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

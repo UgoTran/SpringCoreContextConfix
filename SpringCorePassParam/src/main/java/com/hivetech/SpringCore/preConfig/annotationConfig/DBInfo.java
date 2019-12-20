@@ -2,7 +2,6 @@ package com.hivetech.SpringCore.preConfig.annotationConfig;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,20 +12,20 @@ import org.springframework.stereotype.Component;
 //        @PropertySource("classpath:2ndDB.properties")
 //})
 public class DBInfo {
-    @Value("${db.url}")
-    private String url;
-    private String port;
+    @Value("${db.anotherUrl}")
+    private String anotherUrl;
+    private String anotherPort;
     private String userName;
     private String passWord;
 
     //    @Value("${db.url}")
-    public void setUrl(String url) {
-        this.url = url;
+    public void setAnotherUrl(String anotherUrl) {
+        this.anotherUrl = anotherUrl;
     }
 
-    @Value("${db.port}")
-    public void setPort(String port) {
-        this.port = port;
+    @Value("${db.anotherPort}")
+    public void setAnotherPort(String anotherPort) {
+        this.anotherPort = anotherPort;
     }
 
     @Value("${db.username}")
@@ -42,8 +41,8 @@ public class DBInfo {
     @Override
     public String toString() {
         return "DBInfo{" + '\n' +
-                "url='" + url + "," + '\n' +
-                "port='" + port + "," + '\n' +
+                "url='" + anotherUrl + "," + '\n' +
+                "port='" + anotherPort + "," + '\n' +
                 "userName='" + userName + "," + '\n' +
                 "passWord='" + passWord + '\n' +
                 '}';
