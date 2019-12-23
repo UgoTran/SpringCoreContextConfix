@@ -1,0 +1,10 @@
+div{
+    border: 1px solid deeppink;
+    position: relative;
+    top: 15px;
+    margin-top: 15px;
+}
+
+#result{
+    font-size: large;
+}
